@@ -74,13 +74,13 @@ export default function ChatContainer({ currentChat, socket }) {
       <div className="chat-header">
         <div className="user-details">
           <div className="avatar">
-            <img
+            {/* <img
               src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
               alt=""
-            />
+            /> */}
           </div>
           <div className="username">
-            <h3>{currentChat.username}</h3>
+            <h3>{currentChat.username || currentChat.email}</h3>
           </div>
         </div>
         <Logout />
@@ -90,9 +90,8 @@ export default function ChatContainer({ currentChat, socket }) {
           return (
             <div ref={scrollRef} key={uuidv4()}>
               <div
-                className={`message ${
-                  message.fromSelf ? "sended" : "recieved"
-                }`}
+                className={`message ${message.fromSelf ? "sended" : "recieved"
+                  }`}
               >
                 <div className="content ">
                   <p>{message.message}</p>
@@ -120,6 +119,7 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
+    background-color:#080420;
     .user-details {
       display: flex;
       align-items: center;

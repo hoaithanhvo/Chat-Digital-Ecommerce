@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Logo from "../assets/logo.svg";
+import Logo from "../assets/logo.png";
 
 export default function Contacts({ contacts, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
@@ -17,44 +17,43 @@ export default function Contacts({ contacts, changeChat }) {
     setCurrentSelected(index);
     changeChat(contact);
   };
+  console.log(contacts);
   return (
     <>
       {currentUserImage && currentUserImage && (
         <Container>
           <div className="brand">
             <img src={Logo} alt="logo" />
-            <h3>snappy</h3>
           </div>
           <div className="contacts">
             {contacts.map((contact, index) => {
               return (
                 <div
                   key={contact._id}
-                  className={`contact ${
-                    index === currentSelected ? "selected" : ""
-                  }`}
+                  className={`contact ${index === currentSelected ? "selected" : ""
+                    }`}
                   onClick={() => changeCurrentChat(index, contact)}
                 >
                   <div className="avatar">
-                    <img
+                    {/* <img
                       src={`data:image/svg+xml;base64,${contact.avatarImage}`}
                       alt=""
-                    />
+                    /> */}
                   </div>
                   <div className="username">
-                    <h3>{contact.username}</h3>
+                    <h3>{contact?.username || contact?.email}</h3>
                   </div>
                 </div>
               );
             })}
           </div>
           <div className="current-user">
-            <div className="avatar">
+            {/* <div className="avatar">
               <img
                 src={`data:image/svg+xml;base64,${currentUserImage}`}
                 alt="avatar"
               />
-            </div>
+            </div> */}
             <div className="username">
               <h2>{currentUserName}</h2>
             </div>
@@ -68,12 +67,15 @@ const Container = styled.div`
   display: grid;
   grid-template-rows: 10% 75% 15%;
   overflow: hidden;
-  background-color: #080420;
+  background-color: gray;
   .brand {
     display: flex;
     align-items: center;
     gap: 1rem;
     justify-content: center;
+    background-color: #080420;
+    margin-bottom:3px;
+    border-right: 1px solid white;
     img {
       height: 2rem;
     }
@@ -97,7 +99,7 @@ const Container = styled.div`
       }
     }
     .contact {
-      background-color: #ffffff34;
+      background-color: black;
       min-height: 5rem;
       cursor: pointer;
       width: 90%;
@@ -119,12 +121,15 @@ const Container = styled.div`
       }
     }
     .selected {
-      background-color: #9a86f3;
+      background-color: rgb(154, 134, 243);
     }
   }
 
   .current-user {
-    background-color: #0d0d30;
+    margin-top: 32px;
+    border-right: 1px solid white;
+
+    background-color: #080420;
     display: flex;
     justify-content: center;
     align-items: center;

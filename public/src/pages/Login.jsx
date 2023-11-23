@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
-import Logo from "../assets/logo.svg";
+import Logo from "../assets/logo.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loginRoute } from "../utils/APIRoutes";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [values, setValues] = useState({ username: "", password: "" });
+  const [values, setValues] = useState({ email: "", password: "" });
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -28,8 +28,8 @@ export default function Login() {
   };
 
   const validateForm = () => {
-    const { username, password } = values;
-    if (username === "") {
+    const { email, password } = values;
+    if (email === "") {
       toast.error("Email and Password is required.", toastOptions);
       return false;
     } else if (password === "") {
@@ -42,9 +42,10 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForm()) {
-      const { username, password } = values;
+      const { email, password } = values;
+      console.log(email, "1");
       const { data } = await axios.post(loginRoute, {
-        username,
+        email,
         password,
       });
       if (data.status === false) {
@@ -67,12 +68,12 @@ export default function Login() {
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="logo" />
-            <h1>snappy</h1>
+            {/* <h1 style={{ color: 'red' }}>Digital Ecommerce</h1> */}
           </div>
           <input
             type="text"
-            placeholder="Username"
-            name="username"
+            placeholder="Email"
+            name="email"
             onChange={(e) => handleChange(e)}
             min="3"
           />
@@ -101,14 +102,16 @@ const FormContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #131324;
+  background-color: black;
+
   .brand {
     display: flex;
     align-items: center;
     gap: 1rem;
     justify-content: center;
     img {
-      height: 5rem;
+      width: 250px ;
+      height: 2rem;
     }
     h1 {
       color: white;
@@ -120,25 +123,26 @@ const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background-color: #00000076;
+    background-color: white;
     border-radius: 2rem;
     padding: 5rem;
   }
   input {
     background-color: transparent;
     padding: 1rem;
-    border: 0.1rem solid #4e0eff;
+    border: 0.1rem solid black;
     border-radius: 0.4rem;
     color: white;
     width: 100%;
     font-size: 1rem;
+    color: black;
     &:focus {
       border: 0.1rem solid #997af0;
       outline: none;
     }
   }
   button {
-    background-color: #4e0eff;
+    background-color: red;
     color: white;
     padding: 1rem 2rem;
     border: none;
@@ -148,14 +152,15 @@ const FormContainer = styled.div`
     font-size: 1rem;
     text-transform: uppercase;
     &:hover {
-      background-color: #4e0eff;
+      background-color: orange;
     }
+    
   }
   span {
     color: white;
     text-transform: uppercase;
     a {
-      color: #4e0eff;
+      color: black;
       text-decoration: none;
       font-weight: bold;
     }
